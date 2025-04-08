@@ -31,7 +31,8 @@ function loadProjects() {
     projects.forEach((p, i) => {
         ul.innerHTML += `
             <li id="li-${i}">
-                ${p.name}
+                <p>${p.name}</p>
+                <span>${p.timeSpent} seconds</span>
                 <button class="work">Work</button>
                 <button class="delete">Delete</button>
             </li>
