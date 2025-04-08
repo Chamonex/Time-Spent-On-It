@@ -39,10 +39,10 @@ function loadProjects() {
     })
 
     const workButtons = document.querySelectorAll('.work');
-    
+
     workButtons.forEach((button, i) => {
         button.addEventListener('click', () => {
-            working(i);
+            work(i);
         });
     });
 
@@ -55,12 +55,37 @@ function loadProjects() {
     });
 }
 
-function working(index) {
-    console.log(`Working on ${projects[index].name}`);
-}
-
 function deleteProject(index) {
     projects.splice(index, 1);
-    console.log(projects);
     loadProjects();
+}
+
+function work(index) {
+
+    const mostrador = document.getElementById('mostrador');
+
+    mostrador.innerHTML += `
+        <h2>Trabalhando no proeto "${projects[index].name}"</h2>
+        <button id="start">Start</button>
+    `
+    const startButton = document.getElementById('start');
+    startButton.addEventListener('click', () => {
+        let seconds = 0;
+        const timer = setInterval(() => {
+            seconds++;
+            mostrador.innerHTML = `
+            <h2>Trabalhando no projeto "${projects[index].name}"</h2>
+            <p>Tempo gasto: ${seconds} segundos</p>
+            <button id="stop">Stop</button>
+            `;
+            const stopButton = document.getElementById('stop');
+            stopButton.addEventListener('click', () => {
+                clearInterval(timer);
+                projects[index].timeSpent += seconds;
+                mostrador.innerHTML = '';
+                loadProjects();
+            });
+        }, 1000);
+    });
+
 }
